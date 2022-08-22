@@ -1,14 +1,14 @@
-package com.java.project.controller;
+package com.java.project.start;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class TestController {
+public class HomeController {
 
-    @RequestMapping("/test")
+    @RequestMapping("/")
     public String test() {
-        return "test";
+        return "index";
     }
 
 }
