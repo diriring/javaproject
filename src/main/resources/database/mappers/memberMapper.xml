@@ -9,4 +9,12 @@
         VALUES (#{id}, #{password}, #{salt}, #{name}, #{email}, #{phone}, NOW())
     </insert>
 
+    <select id="getMember" parameterType="MemberVO" resultType="MemberVO">
+        SELECT sId as id FROM tMember WHERE sId = #{id} AND sPassword = #{password}
+    </select>
+
+    <select id="getSalt" parameterType="MemberVO" resultType="MemberVO">
+        SELECT sSalt as salt FROM tMember WHERE sId = #{id}
+    </select>
+
 </mapper>

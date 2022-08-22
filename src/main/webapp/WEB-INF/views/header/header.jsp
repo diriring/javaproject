@@ -26,7 +26,7 @@
               메뉴
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/view/login.php">로그인</a></li>
+              <li><a class="dropdown-item" href="/member/login">로그인</a></li>
               <li><a class="dropdown-item" href="/member/memberJoin">회원가입</a></li>
             </ul>
           </li>
