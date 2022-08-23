@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
@@ -15,20 +15,26 @@
           </li>
           <li class="nav-item dropdown">
 
-<%--            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">--%>
-<%--              환영합니다.--%>
-<%--            </a>--%>
-<%--            <ul class="dropdown-menu">--%>
-<%--              <li><a class="dropdown-item" id="logout" href="#">로그아웃</a></li>--%>
-<%--              <li><a class="dropdown-item" href="/view/myPage.php">마이페이지</a></li>--%>
-<%--            </ul>--%>
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              메뉴
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/member/login">로그인</a></li>
-              <li><a class="dropdown-item" href="/member/memberJoin">회원가입</a></li>
-            </ul>
+            <c:choose>
+                <c:when test="${not empty member}">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            ${member.id}님
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" id="logout" href="/member/logout">로그아웃</a></li>
+                        <li><a class="dropdown-item" href="/member/myPage">마이페이지</a></li>
+                    </ul>
+                </c:when>
+                <c:otherwise>
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        메뉴
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/member/login">로그인</a></li>
+                        <li><a class="dropdown-item" href="/member/memberJoin">회원가입</a></li>
+                    </ul>
+                </c:otherwise>
+            </c:choose>
           </li>
         </ul>
       </div>

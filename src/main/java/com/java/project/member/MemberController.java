@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/member/*")
 public class MemberController {
@@ -25,12 +27,10 @@ public class MemberController {
     }
 
     @PostMapping("memberJoin")
-    public ModelAndView setAdd(MemberVO memberVO) throws Exception {
-        ModelAndView mv = new ModelAndView();
+    @ResponseBody
+    public int setAdd(MemberVO memberVO) throws Exception {
         int result = memberService.setAdd(memberVO);
-        mv.addObject("result", result);
-        mv.setViewName("common/ajaxResult");
-        return mv;
+        return result;
     }
 
     @GetMapping("login")
@@ -42,13 +42,67 @@ public class MemberController {
     }
 
     @PostMapping("login")
-    public ModelAndView login(MemberVO memberVO) throws Exception {
-        ModelAndView mv = new ModelAndView();
-        int result = memberService.login(memberVO);
-        mv.addObject("result", result);
-        mv.setViewName("common/ajaxResult");
+    @ResponseBody
+    public int login(MemberVO memberVO, HttpSession session) throws Exception {
+        int result = memberService.login(memberVO, session);
+        return result;
+    }
 
+    @GetMapping("logout")
+    public String logout(HttpSession session) throws Exception {
+        memberService.logout(session);
+        return "index";
+    }
+
+    @GetMapping("myPage")
+    public ModelAndView myPage(HttpSession session) throws Exception {
+        ModelAndView mv = new ModelAndView();
+        MemberVO memberVO = memberService.getMyInfo(session);
+        mv.addObject("memberVO", memberVO);
+        mv.setViewName("member/myPage");
         return mv;
+    }
+
+    @GetMapping("memberUpdate")
+    public ModelAndView setUpdate(HttpSession session) throws Exception {
+        ModelAndView mv = new ModelAndView();
+        MemberVO memberVO = memberService.getMyInfo(session);
+        mv.addObject("memberVO", memberVO);
+        mv.setViewName("member/memberUpdate");
+        return mv;
+    }
+
+    @PostMapping("memberUpdate")
+    @ResponseBody
+    public int setUpdate(MemberVO memberVO, HttpSession session) throws Exception {
+        int result = memberService.setUpdate(memberVO, session);
+        return result;
+    }
+
+    @GetMapping("memberDelete")
+    public void setDelete() throws Exception {
+
+    }
+
+    @PostMapping("memberDelete")
+    @ResponseBody
+    public int setDelete(MemberVO memberVO, HttpSession session) throws Exception {
+        int result = memberService.setDelete(memberVO, session);
+        return result;
+    }
+
+    @PostMapping("checkId")
+    @ResponseBody
+    public int checkId(MemberVO memberVO) throws Exception {
+        int result = memberService.checkId(memberVO);
+        return result;
+    }
+
+    @PostMapping("checkEmail")
+    @ResponseBody
+    public int checkEmail(MemberVO memberVO) throws Exception {
+        int result = memberService.checkEmail(memberVO);
+        return result;
     }
 
 }

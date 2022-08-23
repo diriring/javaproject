@@ -7,14 +7,15 @@ $("#loginBtn").on("click", function () {
            password: $("#password").val(),
        },
        success: function(result) {
-           console.log(result);
+           // console.log(result);
+
            if(result == 1) {
                alert("로그인 성공");
                location.href="../";
 
            }else {
                alert("로그인 실패");
-               location.href="./";
+               location.href="./login";
            }
        },
        error: function() {
