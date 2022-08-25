@@ -1,5 +1,7 @@
 package com.java.project.board;
 
+import com.java.project.reply.ReplyService;
+import com.java.project.reply.ReplyVO;
 import com.java.project.util.Pager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,7 @@ import java.util.Map;
 public class BoardController {
 
     private final BoardService boardService;
+    private final ReplyService replyService;
 
     @GetMapping("boardList")
     public ModelAndView getList(Pager pager) throws Exception {
@@ -49,7 +52,9 @@ public class BoardController {
     public ModelAndView getDetail(BoardVO boardVO) throws Exception {
         ModelAndView mv = new ModelAndView();
         boardVO = boardService.getDetail(boardVO);
-        mv.addObject("vo", boardVO);
+        List<ReplyVO> ar = replyService.getList(boardVO);
+        mv.addObject("list", ar);
+        mv.addObject("boardVO", boardVO);
         mv.setViewName("board/boardDetail");
         return mv;
     }

@@ -25,6 +25,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/board/boardUpdate");
 
 
+
         registry.addInterceptor(idCheckInterceptor)
                 .addPathPatterns("/board/boardUpdate");
     }

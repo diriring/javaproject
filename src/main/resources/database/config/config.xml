@@ -8,6 +8,7 @@
         <typeAlias type="com.java.project.member.MemberVO" alias="MemberVO"></typeAlias>
         <typeAlias type="com.java.project.board.BoardVO" alias="BoardVO"></typeAlias>
         <typeAlias type="com.java.project.board.CategoryVO" alias="CategoryVO"></typeAlias>
+        <typeAlias type="com.java.project.reply.ReplyVO" alias="ReplyVO"></typeAlias>
         <typeAlias type="com.java.project.util.Pager" alias="Pager"></typeAlias>
     </typeAliases>
 </configuration>

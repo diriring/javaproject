@@ -3,4 +3,40 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.java.project.reply.ReplyMapper">
+    <insert id="setAdd" parameterType="ReplyVO">
+        INSERT INTO
+            tReply (sId, seqBoardNum, sContent, dtRegDate)
+        VALUES
+            (#{id}, #{boardNum}, #{content}, NOW())
+    </insert>
+
+    <select id="getList" parameterType="BoardVO" resultType="ReplyVO">
+        SELECT
+            seqReplyNum as replyNum,
+            sId as id,
+            seqBoardNum as boardNum,
+            sContent as content,
+            dtRegDate as regDate
+        FROM
+            tReply
+        WHERE
+            seqBoardNum = #{boardNum}
+    </select>
+
+    <update id="setUpdate" parameterType="ReplyVO">
+        UPDATE
+            tReply
+        SET
+            sContent = #{content}
+        WHERE
+            seqReplyNum = #{replyNum}
+    </update>
+
+    <delete id="setDelete" parameterType="ReplyVO">
+        DELETE
+        FROM
+            tReply
+        WHERE
+            seqReplyNum = #{replyNum}
+    </delete>
 </mapper>
