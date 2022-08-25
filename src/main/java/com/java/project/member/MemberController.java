@@ -1,5 +1,6 @@
 package com.java.project.member;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,10 +14,10 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/member/*")
+@RequiredArgsConstructor
 public class MemberController {
 
-    @Autowired
-    private MemberService memberService;
+    private final MemberService memberService;
 
     @GetMapping("memberJoin")
     public ModelAndView setAdd() throws Exception {
@@ -34,10 +35,9 @@ public class MemberController {
     }
 
     @GetMapping("login")
-    public ModelAndView login() throws Exception {
+    public ModelAndView login() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("member/login");
-
         return mv;
     }
 
@@ -75,6 +75,8 @@ public class MemberController {
     @PostMapping("memberUpdate")
     @ResponseBody
     public int setUpdate(MemberVO memberVO, HttpSession session) throws Exception {
+
+
         int result = memberService.setUpdate(memberVO, session);
         return result;
     }

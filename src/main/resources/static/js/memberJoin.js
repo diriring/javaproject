@@ -156,7 +156,6 @@ function chkRePW() {
 
 //비밀번호 유효성 검증 함수
 function chkPW() {
-
     let pw = $("#password").val();
     let num = pw.search(/[0-9]/g);
     let eng = pw.search(/[a-z]/ig);

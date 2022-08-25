@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java.project.board.BoardMapper">
+    <insert id="setAdd" parameterType="BoardVO">
+        INSERT INTO
+            tBoard (nCategoryNum, sId, sTitle, sContent, dtRegDate)
+        VALUES
+            (#{categoryNum}, #{id}, #{title}, #{content}, NOW())
+    </insert>
+    <select id="getList" parameterType="Pager" resultMap="listResult">
+        SELECT
+            bd.seqBoardNum as boardNum,
+            ct.sCategoryName as categoryName,
+            bd.sId as id,
+            bd.sTitle as title,
+            bd.dtRegDate as regDate,
+            bd.nHit as hit,
+            bd.dtEditDate as editDate
+        FROM
+            tBoard bd
+        INNER JOIN
+            tCategory ct ON (bd.nCategoryNum = ct.nCategoryNum)
+        ORDER BY
+            seqBoardNum DESC
+            LIMIT #{startRow}, #{perPage}
+    </select>
+    
+    <resultMap id="listResult" type="BoardVO">
+        <id column="boardNum" property="boardNum"></id>
+        <result column="categoryNum" property="categoryNum"></result>
+        <result column="id" property="id"></result>
+        <result column="title" property="title"></result>
+        <result column="content" property="content"></result>
+        <result column="regDate" property="regDate"></result>
+        <result column="hit" property="hit"></result>
+        <result column="editDate" property="editDate"></result>
+        <association property="categoryVO" javaType="CategoryVO">
+            <id column="categoryNum" property="categoryNum"></id>
+            <result column="categoryName" property="categoryName"></result>
+        </association>
+    </resultMap>
+    
+    <select id="countTotal" resultType="Long">
+        SELECT
+            COUNT(seqBoardNum)
+        FROM
+            tBoard
+    </select>
+
+    <select id="getDetail" parameterType="BoardVO" resultMap="listResult">
+        SELECT
+            bd.seqBoardNum as boardNum,
+            bd.nCategoryNum as categoryNum,
+            ct.sCategoryName as categoryName,
+            bd.sId as id,
+            bd.sTitle as title,
+            bd.sContent as content,
+            bd.dtRegDate as regDate,
+            bd.nHit as hit,
+            bd.dtEditDate as editDate
+        FROM
+            tBoard bd
+        INNER JOIN
+            tCategory ct ON (bd.nCategoryNum = ct.nCategoryNum)
+        WHERE
+            seqBoardNum = #{boardNum}
+    </select>
+
+    <update id="setUpdate" parameterType="BoardVO">
+        UPDATE
+            tBoard
+        SET
+            sTitle = #{title},
+            sContent= #{content},
+            nCategoryNum = #{categoryNum},
+            dtEditDate = NOW()
+        WHERE
+            seqBoardNum = #{boardNum}
+    </update>
+
+    <delete id="setDelete" parameterType="BoardVO">
+        DELETE
+        FROM
+            tBoard
+        WHERE
+            seqBoardNum = #{boardNum}
+    </delete>
+</mapper>

@@ -5,36 +5,79 @@
 <mapper namespace="com.java.project.member.MemberMapper">
 
     <insert id="setAdd" parameterType="MemberVO">
-        INSERT INTO tMember (sId, sPassword, sSalt, sName, sEmail, sPhone, dtRegDate)
-        VALUES (#{id}, #{password}, #{salt}, #{name}, #{email}, #{phone}, NOW())
+        INSERT INTO
+            tMember
+            (sId, sPassword, sSalt, sName, sEmail, sPhone, dtRegDate)
+        VALUES
+            (#{id}, #{password}, #{salt}, #{name}, #{email}, #{phone}, NOW())
     </insert>
 
     <select id="getMember" parameterType="MemberVO" resultType="MemberVO">
-        SELECT sId as id FROM tMember WHERE sId = #{id} AND sPassword = #{password} AND nDelete = 0
+        SELECT
+            sId as id
+        FROM
+            tMember
+        WHERE
+            sId = #{id}
+            AND sPassword = #{password}
+            AND nDelete = 0
     </select>
 
     <select id="getSalt" parameterType="MemberVO" resultType="MemberVO">
-        SELECT sSalt as salt FROM tMember WHERE sId = #{id}
+        SELECT
+            sSalt as salt
+        FROM
+            tMember
+        WHERE
+            sId = #{id}
     </select>
 
     <select id="getMyInfo" parameterType="MemberVO" resultType="MemberVO">
-        SELECT sId as id, sName as name, sEmail as email, sPhone as phone FROM tMember WHERE sId = #{id}
+        SELECT
+            sId as id,
+            sName as name,
+            sEmail as email,
+            sPhone as phone
+        FROM
+            tMember
+        WHERE
+            sId = #{id}
     </select>
 
     <update id="setDelete" parameterType="MemberVO">
-        UPDATE tMember SET nDelete = 1 WHERE sId = #{id}
+        UPDATE
+            tMember
+        SET
+            nDelete = 1 WHERE sId = #{id}
     </update>
 
     <select id="checkId" parameterType="MemberVO" resultType="int">
-        SELECT COUNT(sId) FROM tMember WHERE sId = #{id}
+        SELECT
+            COUNT(sId)
+        FROM
+            tMember
+        WHERE
+            sId = #{id}
     </select>
 
     <select id="checkEmail" parameterType="MemberVO" resultType="int">
-        SELECT COUNT(sEmail) FROM tMember WHERE sEmail = #{email}
+        SELECT
+            COUNT(sEmail)
+        FROM
+            tMember
+        WHERE
+            sEmail = #{email}
     </select>
 
     <update id="setUpdate" parameterType="MemberVO">
-        UPDATE tMember SET sName = #{name}, sEmail = #{email}, sPhone = #{phone} WHERE sId = #{id}
+        UPDATE
+            tMember
+        SET
+            sName = #{name},
+            sEmail = #{email},
+            sPhone = #{phone}
+        WHERE
+            sId = #{id}
     </update>
 
 </mapper>

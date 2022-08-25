@@ -1,5 +1,6 @@
 package com.java.project.member;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,10 @@ import java.util.Base64;
 import java.util.Enumeration;
 
 @Service
+@RequiredArgsConstructor
 public class MemberService {
 
-    @Autowired
-    private MemberMapper memberMapper;
+    private final MemberMapper memberMapper;
 
     public int setAdd(MemberVO memberVO) throws Exception {
         //솔트 생성
