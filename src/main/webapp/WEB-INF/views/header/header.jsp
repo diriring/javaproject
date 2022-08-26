@@ -17,18 +17,18 @@
 
             <c:choose>
                 <c:when test="${not empty member}">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <p class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             ${member.id}님
-                    </a>
+                    </p>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" id="logout" href="#">로그아웃</a></li>
                         <li><a class="dropdown-item" href="/member/myPage">마이페이지</a></li>
                     </ul>
                 </c:when>
                 <c:otherwise>
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <p class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         메뉴
-                    </a>
+                    </p>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/member/login">로그인</a></li>
                         <li><a class="dropdown-item" href="/member/memberJoin">회원가입</a></li>

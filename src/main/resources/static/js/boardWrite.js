@@ -34,6 +34,7 @@ $("#addBtn").on("click", function() {
 
             if (result.data == 1) {
                 alert("등록 성공");
+                localStorage.clear();
                 location.href="/board/boardList";
 
             } else {
@@ -50,6 +51,7 @@ $("#addBtn").on("click", function() {
 
 //페이지 이동할 때 localStorage 및 서버 파일 삭제
 $("a").on("click", function(event) {
+    event.preventDefault();
     deleteTemp($(event.target).attr("href"))
 });
 
@@ -74,7 +76,6 @@ function saveValue(event){
     let id = event.id;
     let val = event.value;
     localStorage.setItem(id, val);
-    console.log(localStorage)
 }
 
 //localStorage 삭제 및 서버 파일 삭제
@@ -101,5 +102,5 @@ function deleteTemp(path) {
     src.forEach((path)=>deleteFile(path));
 
     localStorage.clear();
-    location.href="./boardList";
+    location.href=path;
 }
