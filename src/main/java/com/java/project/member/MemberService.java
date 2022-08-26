@@ -50,7 +50,7 @@ public class MemberService {
         String id = memberVO.getId();
 
         //솔트값 가져오기
-        memberVO = memberMapper.getSalt(memberVO);
+        memberVO = memberMapper.getMyInfo(memberVO);
         String salt = memberVO.getSalt();
 
         password = password + salt;
@@ -95,7 +95,7 @@ public class MemberService {
 
         //입력한 비밀번호에 솔트값 더해주기
         String password = memberVO.getPassword();
-        String salt = memberMapper.getSalt(temp).getSalt();
+        String salt = memberMapper.getMyInfo(temp).getSalt();
         password = password + salt;
 
         //해시화 한 뒤, 비밀번호가 맞는지 확인
@@ -110,31 +110,34 @@ public class MemberService {
         int result = 3;
 
         if(temp != null) {
-        result = memberMapper.setDelete(temp);
-        //id를 제외한 회원정보를 다른 임의의 값으로 UPDATE
-        session.invalidate();
+            temp.setName("name");
+            temp.setEmail("email");
+            temp.setPhone("phone");
+            temp.setDelete(1);
+            result = memberMapper.setUpdate(temp);
+            //id를 제외한 회원정보를 다른 임의의 값으로 UPDATE
+            session.invalidate();
         }
 
         return result;
     }
 
-    public int checkId(MemberVO memberVO) throws Exception {
-        return memberMapper.checkId(memberVO);
-    }
-
-    public int checkEmail(MemberVO memberVO) throws Exception {
-        String email = memberVO.getEmail();
-        //회원 정보 업데이트의 경우 기존 이메일은 중복체크 하지 않도록
-        if(memberVO.getId() != null) {
+    public int checkMember(MemberVO memberVO) throws Exception {
+        if(memberVO.getId() != null && memberVO.getEmail() != null) {
+            String email = memberVO.getEmail();
             memberVO = memberMapper.getMyInfo(memberVO);
 
             if(email.equals(memberVO.getEmail())) {
                 return 0;
             }
-        }
 
-        return memberMapper.checkEmail(memberVO);
+            MemberVO temp = new MemberVO();
+            temp.setEmail(email);
+            return memberMapper.checkMember(temp);
+        }
+        return memberMapper.checkMember(memberVO);
     }
+
 
     public int setUpdate(MemberVO memberVO, HttpSession session) throws Exception {
         MemberVO temp = (MemberVO)session.getAttribute("member");

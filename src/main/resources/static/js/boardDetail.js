@@ -1,4 +1,16 @@
 $("#deleteBtn").on("click", function() {
+
+    let src = new Array();
+
+    $("#content img").each(function(index, item) {
+        let split = item.src.split('/');
+        // console.log(split);
+        // let path = "../" + split[3] + "/" + split[4] + "/" + split[5];
+        src[index] = split[5];
+    });
+
+    console.log(src);
+
     $.ajax({
         type: "POST",
         url: "/board/boardDelete",
@@ -10,6 +22,7 @@ $("#deleteBtn").on("click", function() {
             console.log(result);
 
             if (result.data == 1) {
+                src.forEach((path)=>deleteFile(path));
                 alert("삭제 성공");
                 location.href="/board/boardList";
 
@@ -112,3 +125,18 @@ $("#replyResult").on("click", ".replyDelBtn", function(event) {
     });
 
 });
+
+function deleteFile(fileName) {
+    $.ajax({
+
+        type: "POST",
+        url: "./deleteFile",
+        data: {
+            fileName: fileName
+        },
+        success: function(result) {
+            console.log(result.data);
+        }
+
+    });
+}

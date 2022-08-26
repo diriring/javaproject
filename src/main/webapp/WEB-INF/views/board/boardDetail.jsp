@@ -48,7 +48,7 @@
         <td>${boardVO.hit}</td>
       </tr>
       <tr>
-        <td colspan="5">${boardVO.content}</td>
+        <td id="content" colspan="5">${boardVO.content}</td>
       </tr>
       </tbody>
     </table>

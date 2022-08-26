@@ -9,8 +9,8 @@ public class Pager {
 
     private Integer pn;
 
-//    private String kind;
-//    private String search;
+    private String kind;
+    private String search;
 
     private Long startNum;
     private Long lastNum;
@@ -57,13 +57,13 @@ public class Pager {
 
     }
 
-//    public String getSearch() {
-//        //검색어가 넘어오지 않을 때 (search=null일 때)
-//        if(search==null) {
-//            this.search="";
-//        }
-//        return search;
-//    }
+    public String getSearch() {
+        //검색어가 넘어오지 않을 때 (search=null일 때)
+        if(search==null) {
+            this.search="";
+        }
+        return search;
+    }
 
 
     public Integer getPn() {

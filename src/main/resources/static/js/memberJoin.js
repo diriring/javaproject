@@ -94,7 +94,7 @@ $("#idCheckBtn").on("click", function() {
     console.log($("#id").val());
     $.ajax({
         type: "POST",
-        url: "./checkId",
+        url: "./checkMember",
         data: {
             id: $("#id").val(),
         },
@@ -119,7 +119,7 @@ $("#emailCheckBtn").on("click", function() {
     console.log($("#email").val());
     $.ajax({
         type: "POST",
-        url: "./checkEmail",
+        url: "./checkMember",
         data: {
             email: $("#email").val()
         },

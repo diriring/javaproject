@@ -49,6 +49,7 @@ public class MemberController {
     }
 
     @GetMapping("logout")
+    @ResponseBody
     public String logout(HttpSession session) throws Exception {
         memberService.logout(session);
         return "index";
@@ -93,17 +94,10 @@ public class MemberController {
         return result;
     }
 
-    @PostMapping("checkId")
+    @PostMapping("checkMember")
     @ResponseBody
-    public int checkId(MemberVO memberVO) throws Exception {
-        int result = memberService.checkId(memberVO);
-        return result;
-    }
-
-    @PostMapping("checkEmail")
-    @ResponseBody
-    public int checkEmail(MemberVO memberVO) throws Exception {
-        int result = memberService.checkEmail(memberVO);
+    public int checkMember(MemberVO memberVO) throws Exception {
+        int result = memberService.checkMember(memberVO);
         return result;
     }
 

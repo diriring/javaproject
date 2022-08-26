@@ -24,20 +24,21 @@
         <footer class="blockquote-footer">보드게임에 관해 자유롭게 의견을 나눠주세요.</footer>
     </blockquote>
 
-<%--    <div class="col-2 d-inline-block">--%>
-<%--        <select class="form-select" id="kind" aria-label="Default select example">--%>
-<%--            <option value="title">제목</option>--%>
-<%--            <option value="content">내용</option>--%>
-<%--            <option value="id">작성자</option>--%>
-<%--        </select>--%>
-<%--    </div>--%>
-<%--    <div class="col-3 d-inline-block">--%>
-<%--        <div class="input-group mb-3">--%>
-<%--            <input type="text" id="search" class="form-control" placeholder="검색어를 입력하세요.">--%>
-<%--            <button class="btn btn-outline-secondary" type="button" id="searchBtn">검색</button>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-
+    <form action="./boardList" method="get">
+        <div class="col-2 d-inline-block">
+            <select class="form-select" name="kind" id="kind" aria-label="Default select example">
+                <option value="title">제목</option>
+                <option value="content">내용</option>
+                <option value="id">작성자</option>
+            </select>
+        </div>
+        <div class="col-3 d-inline-block">
+            <div class="input-group mb-3">
+                <input type="text" name="search" id="search" class="form-control" placeholder="검색어를 입력하세요." value="${pager.search}">
+                <button class="btn btn-outline-secondary" type="submit">검색</button>
+            </div>
+        </div>
+    </form>
     <table class="table table-striped table-hover table-bordered text-center">
         <colgroup>
             <col width="20%"/>
@@ -73,7 +74,7 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item">
-                        <a class="page-link" href="./boardList?pn=${pager.pre?pager.startNum-1:1}" aria-label="Previous">
+                        <a class="page-link" href="./boardList?pn=${pager.pre?pager.startNum-1:1}&kind=${pager.kind}&search=${pager.search}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
@@ -81,11 +82,11 @@
                         <c:choose>
                             <c:when test="${pager.pn eq i}">
                                 <li class="page-item active" aria-current="page">
-                                    <a class="page-link" href="./boardList?pn=${i}">${i}</a>
+                                    <a class="page-link" href="./boardList?pn=${i}&kind=${pager.kind}&search=${pager.search}">${i}</a>
                                 </li>
                             </c:when>
                             <c:otherwise>
-                                <li class="page-item"><a class="page-link" href="./boardList?pn=${i}">${i}</a></li>
+                                <li class="page-item"><a class="page-link" href="./boardList?pn=${i}&kind=${pager.kind}&search=${pager.search}">${i}</a></li>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>

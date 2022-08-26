@@ -21,7 +21,7 @@
                             ${member.id}님
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" id="logout" href="/member/logout">로그아웃</a></li>
+                        <li><a class="dropdown-item" id="logout" href="#">로그아웃</a></li>
                         <li><a class="dropdown-item" href="/member/myPage">마이페이지</a></li>
                     </ul>
                 </c:when>
@@ -41,3 +41,20 @@
     </div>
   </nav>
 </div>
+
+<script>
+    $("#logout").on("click", function () {
+        console.log("로그아웃 클릭");
+        $.ajax({
+            type: "GET",
+            url: "/member/logout",
+            success: function() {
+                localStorage.clear();
+                location.href = "/";
+            },
+            error: function() {
+                alert("에러");
+            }
+        });
+    });
+</script>

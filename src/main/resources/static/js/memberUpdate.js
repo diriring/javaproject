@@ -3,7 +3,7 @@ let uniqueEmail = false;
 $("#emailCheckBtn").on("click", function() {
     $.ajax({
         type: "POST",
-        url: "./checkEmail",
+        url: "./checkMember",
         data: {
             id: $("#id").val(),
             email: $("#email").val()

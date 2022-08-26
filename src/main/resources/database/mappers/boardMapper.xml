@@ -22,6 +22,13 @@
             tBoard bd
         INNER JOIN
             tCategory ct ON (bd.nCategoryNum = ct.nCategoryNum)
+        WHERE
+            <choose>
+                <when test="kind == 'title'">sTitle</when>
+                <when test="kind == 'content'">sContent</when>
+                <otherwise>sId</otherwise>
+            </choose>
+            LIKE CONCAT('%',#{search},'%')
         ORDER BY
             seqBoardNum DESC
             LIMIT #{startRow}, #{perPage}
@@ -42,11 +49,18 @@
         </association>
     </resultMap>
     
-    <select id="countTotal" resultType="Long">
+    <select id="countTotal" parameterType="Pager" resultType="Long">
         SELECT
             COUNT(seqBoardNum)
         FROM
             tBoard
+        WHERE
+        <choose>
+            <when test="kind == 'title'">sTitle</when>
+            <when test="kind == 'content'">sContent</when>
+            <otherwise>sId</otherwise>
+        </choose>
+        LIKE CONCAT('%',#{search},'%')
     </select>
 
     <select id="getDetail" parameterType="BoardVO" resultMap="listResult">

@@ -23,18 +23,10 @@
             AND nDelete = 0
     </select>
 
-    <select id="getSalt" parameterType="MemberVO" resultType="MemberVO">
-        SELECT
-            sSalt as salt
-        FROM
-            tMember
-        WHERE
-            sId = #{id}
-    </select>
-
     <select id="getMyInfo" parameterType="MemberVO" resultType="MemberVO">
         SELECT
             sId as id,
+            sSalt as salt,
             sName as name,
             sEmail as email,
             sPhone as phone
@@ -44,38 +36,35 @@
             sId = #{id}
     </select>
 
-    <update id="setDelete" parameterType="MemberVO">
-        UPDATE
-            tMember
-        SET
-            nDelete = 1 WHERE sId = #{id}
-    </update>
-
-    <select id="checkId" parameterType="MemberVO" resultType="int">
+    <select id="checkMember" parameterType="MemberVO" resultType="int">
         SELECT
             COUNT(sId)
         FROM
             tMember
         WHERE
-            sId = #{id}
-    </select>
-
-    <select id="checkEmail" parameterType="MemberVO" resultType="int">
-        SELECT
-            COUNT(sEmail)
-        FROM
-            tMember
-        WHERE
-            sEmail = #{email}
+            <choose>
+                <when test="id != null">
+                    sId = #{id}
+                </when>
+                <when test="email != null">
+                    sEmail = #{email}
+                </when>
+            </choose>
     </select>
 
     <update id="setUpdate" parameterType="MemberVO">
         UPDATE
             tMember
-        SET
+        <set>
+            <if test="delete != null">
+                nDelete = #{delete},
+                sPassword = null,
+                sSalt = null,
+            </if>
             sName = #{name},
             sEmail = #{email},
             sPhone = #{phone}
+        </set>
         WHERE
             sId = #{id}
     </update>

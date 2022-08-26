@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
@@ -82,5 +83,26 @@ public class BoardController {
         result.put("data", boardService.setDelete(boardVO));
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @PostMapping("uploadFile")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> uploadFile(MultipartFile mf) throws Exception {
+        String fileName = boardService.uploadFile(mf);
+//        System.out.println(mf.getOriginalFilename());
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", fileName);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("deleteFile")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> deleteFile(String fileName) throws Exception {
+        boolean check = boardService.deleteFile(fileName);
+//        System.out.println(mf.getOriginalFilename());
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", check);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 
 }

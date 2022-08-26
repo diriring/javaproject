@@ -27,7 +27,7 @@
       <div class="row mt-5">
         <div class="input-group mb-3">
           <span class="input-group-text">글 제목</span>
-          <input type="text" name="title" id="title" class="form-control" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1">
+          <input type="text" name="title" id="title" class="form-control" placeholder="Title" aria-label="Username" aria-describedby="basic-addon1" onkeyup="saveValue(this);">
           <span class="input-group-text">작성자</span>
           <input type="text" name="id" id="id" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value="${member.id}" readonly="readonly">
           <span class="input-group-text">말머리</span>
@@ -46,45 +46,13 @@
       </div>
 
       <div class="my-5">
-        <button type="button" id="addBtn" class="btn btn-primary mb-3">글 등록</button>
+        <button type="button" id="addBtn" class="btn btn-primary">글 등록</button>
+        <a href="./boardList" class="btn btn-outline-danger">돌아가기</a>
       </div>
   </div>
 </div>
 
 <script src="/js/summernote.js"></script>
-<script>
-    $("#addBtn").on("click", function() {
-        //console.log("클릭");
-        // console.log($("#categoryNum").val());
-
-        $.ajax({
-            type: "POST",
-            url: "/board/boardWrite",
-            data: {
-                id: $("#id").val(),
-                title: $("#title").val(),
-                content: $("#content").val(),
-                categoryNum: $("#categoryNum").val()
-            },
-            success: function(result) {
-
-                console.log(result);
-
-                if (result.data == 1) {
-                    alert("등록 성공");
-                    location.href="/board/boardList";
-
-                } else {
-                    alert("등록 실패");
-                    location.href="/board/boardList";
-                }
-            },
-            error: function() {
-                alert("에러");
-            }
-        });
-
-    });
-</script>
+<script src="/js/boardWrite.js"></script>
 </body>
 </html>

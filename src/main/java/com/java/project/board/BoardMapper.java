@@ -10,7 +10,7 @@ public interface BoardMapper {
 
     public int setAdd(BoardVO boardVO) throws Exception;
     public List<BoardVO> getList(Pager pager) throws Exception;
-    public Long countTotal() throws Exception;
+    public Long countTotal(Pager pager) throws Exception;
     public BoardVO getDetail(BoardVO boardVO) throws Exception;
     public int setUpdate(BoardVO boardVO) throws Exception;
     public int setDelete(BoardVO boardVO) throws Exception;
