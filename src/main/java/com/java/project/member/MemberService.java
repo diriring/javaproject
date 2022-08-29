@@ -17,6 +17,10 @@ public class MemberService {
 
     private final MemberMapper memberMapper;
 
+    /**
+     * 회원가입
+     * @param memberVO
+     */
     public int setAdd(MemberVO memberVO) throws Exception {
         //솔트 생성
         String salt = "";
@@ -41,6 +45,11 @@ public class MemberService {
         return memberMapper.setAdd(memberVO);
     }
 
+    /**
+     * 로그인
+     * @param memberVO
+     * @param session
+     */
     public int login(MemberVO memberVO, HttpSession session) throws Exception {
         String password = memberVO.getPassword();
         String id = memberVO.getId();
@@ -76,16 +85,29 @@ public class MemberService {
         return result;
     }
 
+    /**
+     * 로그아웃
+     * @param session
+     */
     public void logout(HttpSession session) throws Exception {
         session.invalidate();
     }
 
+    /**
+     * 회원 정보 조회
+     * @param session
+     */
     public MemberVO getMyInfo(HttpSession session) throws Exception {
         MemberVO memberVO = (MemberVO)session.getAttribute("member");
         memberVO = memberMapper.getMyInfo(memberVO);
         return memberVO;
     }
 
+    /**
+     * 회원 탈퇴
+     * @param memberVO
+     * @param session
+     */
     public int setDelete(MemberVO memberVO, HttpSession session) throws Exception {
         //세션 정보
         MemberVO temp = (MemberVO)session.getAttribute("member");
@@ -118,6 +140,10 @@ public class MemberService {
         return result;
     }
 
+    /**
+     * 아이디 / 이메일 중복 확인
+     * @param memberVO
+     */
     public int checkMember(MemberVO memberVO) throws Exception {
         if(memberVO.getId() != null && memberVO.getEmail() != null) {
             String email = memberVO.getEmail();
@@ -135,6 +161,11 @@ public class MemberService {
     }
 
 
+    /**
+     * 회원 정보 업데이트
+     * @param memberVO
+     * @param session
+     */
     public int setUpdate(MemberVO memberVO, HttpSession session) throws Exception {
         MemberVO temp = (MemberVO)session.getAttribute("member");
         memberVO.setId(temp.getId());

@@ -3,6 +3,7 @@ package com.java.project.Interceptor;
 import com.java.project.board.BoardService;
 import com.java.project.board.BoardVO;
 import com.java.project.member.MemberVO;
+import com.java.project.util.Pager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -26,9 +27,9 @@ public class IdCheckInterceptor implements HandlerInterceptor {
         String boardNum = request.getParameter("boardNum");
 
         MemberVO memberVO = (MemberVO)request.getSession().getAttribute("member");
-        BoardVO boardVO = new BoardVO();
-        boardVO.setBoardNum(Long.parseLong(boardNum));
-        boardVO = boardService.getDetail(boardVO);
+        Pager pager = new Pager();
+        pager.setBoardNum(Long.parseLong(boardNum));
+        BoardVO boardVO = boardService.getDetail(pager);
 
         if(memberVO.getId().equals(boardVO.getId())) {
             check = true;

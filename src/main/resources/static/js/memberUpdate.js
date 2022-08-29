@@ -9,7 +9,6 @@ $("#emailCheckBtn").on("click", function() {
             email: $("#email").val()
         },
         success: function(result) {
-            console.log(result);
             if(1 == result.data) {
                 alert("이미 사용중인 이메일입니다.");
             }else {
@@ -53,7 +52,7 @@ $("#updateBtn").on("click", function() {
         },
         error: function(result) {
             json = result.responseJSON;
-            alert("글 수정 에러 " + json.status + " : " + json.desc);
+            alert("회원 정보 수정 에러 " + json.status + " : " + json.desc);
         }
     });
 });

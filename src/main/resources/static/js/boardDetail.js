@@ -7,8 +7,6 @@ $("#deleteBtn").on("click", function() {
         src[index] = split[5];
     });
 
-    console.log(src);
-
     $.ajax({
         type: "POST",
         url: "/board/boardDelete",
@@ -73,7 +71,6 @@ $("#modalUpdateBtn").on("click", function() {
             content: $("#modalText").val()
         },
         success: function(result) {
-            console.log(result);
             if(1 == result.data) {
                 alert("댓글 수정 성공");
                 location.reload();

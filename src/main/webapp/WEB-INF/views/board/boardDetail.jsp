@@ -52,11 +52,11 @@
       </tr>
       </tbody>
     </table>
+    <input type="hidden" id="boardNum" value="${boardVO.boardNum}">
     <div>
       <c:if test="${boardVO.id eq member.id}">
         <a class="btn btn-outline-secondary" href="./boardUpdate?boardNum=${boardVO.boardNum}">글 수정</a>
         <button class="btn btn-outline-secondary" id="deleteBtn">글 삭제</button>
-        <input type="hidden" id="boardNum" value="${boardVO.boardNum}">
       </c:if>
     </div>
 
@@ -66,7 +66,6 @@
         <textarea id="replyContent" class="form-control" rows="3"></textarea>
         <div class="mb-3">
           <button type="button" class="btn btn-outline-secondary mt-3" id="replyAddBtn">등록</button>
-          <button type="button" class="btn btn-outline-secondary mt-3" id="refreshBtn">댓글 새로고침</button>
         </div>
       </c:if>
     </div>

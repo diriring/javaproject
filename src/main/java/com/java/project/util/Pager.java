@@ -4,6 +4,9 @@ import lombok.Data;
 
 @Data
 public class Pager {
+
+    private Long boardNum;
+
     private Integer perPage;
     private Integer startRow;
 

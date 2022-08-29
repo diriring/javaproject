@@ -3,7 +3,6 @@ package com.java.project.config;
 import com.java.project.Interceptor.IdCheckInterceptor;
 import com.java.project.Interceptor.LoginInterceptor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -23,8 +22,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/member/memberDelete")
                 .addPathPatterns("/board/boardWrite")
                 .addPathPatterns("/board/boardUpdate");
-
-
 
         registry.addInterceptor(idCheckInterceptor)
                 .addPathPatterns("/board/boardUpdate");

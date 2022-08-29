@@ -3,35 +3,38 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.java.project.board.BoardMapper">
-    <insert id="setAdd" parameterType="BoardVO">
-        INSERT INTO
-            tBoard (nCategoryNum, sId, sTitle, sContent, dtRegDate)
-        VALUES
-            (#{categoryNum}, #{id}, #{title}, #{content}, NOW())
-    </insert>
+
     <select id="getList" parameterType="Pager" resultMap="listResult">
         SELECT
             bd.seqBoardNum as boardNum,
+            bd.nCategoryNum as categoryNum,
             ct.sCategoryName as categoryName,
             bd.sId as id,
             bd.sTitle as title,
+            bd.sContent as content,
             bd.dtRegDate as regDate,
             bd.nHit as hit,
             bd.dtEditDate as editDate
         FROM
             tBoard bd
             INNER JOIN tCategory ct ON (bd.nCategoryNum = ct.nCategoryNum)
-        <where>
-            <choose>
-                <when test="kind == 'title'">sTitle LIKE CONCAT('%',#{search},'%')</when>
-                <when test="kind == 'content'">sContent LIKE CONCAT('%',#{search},'%')</when>
-                <when test="kind == 'id'">sId LIKE CONCAT('%',#{search},'%')</when>
-            </choose>
-        </where>
-        ORDER BY
+        <if test="boardNum == null">
+            <where>
+                <choose>
+                    <when test="kind == 'title'">sTitle LIKE CONCAT('%',#{search},'%')</when>
+                    <when test="kind == 'content'">sContent LIKE CONCAT('%',#{search},'%')</when>
+                    <when test="kind == 'id'">sId LIKE CONCAT('%',#{search},'%')</when>
+                </choose>
+            </where>
+            ORDER BY
             seqBoardNum DESC
-        LIMIT
+            LIMIT
             #{startRow}, #{perPage}
+        </if>
+        <if test="boardNum != null">
+            WHERE
+                seqBoardNum = #{boardNum}
+        </if>
     </select>
     
     <resultMap id="listResult" type="BoardVO">
@@ -63,23 +66,12 @@
         </where>
     </select>
 
-    <select id="getDetail" parameterType="BoardVO" resultMap="listResult">
-        SELECT
-            bd.seqBoardNum as boardNum,
-            bd.nCategoryNum as categoryNum,
-            ct.sCategoryName as categoryName,
-            bd.sId as id,
-            bd.sTitle as title,
-            bd.sContent as content,
-            bd.dtRegDate as regDate,
-            bd.nHit as hit,
-            bd.dtEditDate as editDate
-        FROM
-            tBoard bd
-            INNER JOIN tCategory ct ON (bd.nCategoryNum = ct.nCategoryNum)
-        WHERE
-            seqBoardNum = #{boardNum}
-    </select>
+    <insert id="setAdd" parameterType="BoardVO">
+        INSERT INTO
+            tBoard (nCategoryNum, sId, sTitle, sContent, dtRegDate)
+        VALUES
+            (#{categoryNum}, #{id}, #{title}, #{content}, NOW())
+    </insert>
 
     <update id="setUpdate" parameterType="BoardVO">
         UPDATE

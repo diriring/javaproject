@@ -31,6 +31,10 @@ public class BoardController {
 
     }
 
+    /**
+     * 글 목록 조회
+     * @param pager
+     */
     @GetMapping("boardList")
     public ModelAndView getList(Pager pager) throws Exception {
         ModelAndView mv = new ModelAndView();
@@ -40,11 +44,18 @@ public class BoardController {
         return mv;
     }
 
+    /**
+     * 글 작성 페이지 이동
+     */
     @GetMapping("boardWrite")
     public void setAdd() throws Exception {
 
     }
 
+    /**
+     * 글 작성 (DB INSERT)
+     * @param boardVO
+     */
     @PostMapping("boardWrite")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> setAdd(BoardVO boardVO) throws Exception {
@@ -55,10 +66,14 @@ public class BoardController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /**
+     * 글 상세 조회
+     * @param pager
+     */
     @GetMapping("boardDetail")
-    public ModelAndView getDetail(BoardVO boardVO) throws Exception {
+    public ModelAndView getDetail(Pager pager) throws Exception {
         ModelAndView mv = new ModelAndView();
-        boardVO = boardService.getDetail(boardVO);
+        BoardVO boardVO = boardService.getDetail(pager);
         List<ReplyVO> ar = replyService.getList(boardVO);
         mv.addObject("list", ar);
         mv.addObject("boardVO", boardVO);
@@ -66,14 +81,23 @@ public class BoardController {
         return mv;
     }
 
+    /**
+     * 글 업데이트 페이지 이동
+     * @param pager
+     * @param mv
+     */
     @GetMapping("boardUpdate")
-    public ModelAndView setUpdate(BoardVO boardVO, ModelAndView mv) throws Exception {
-        boardVO = boardService.getDetail(boardVO);
+    public ModelAndView setUpdate(Pager pager, ModelAndView mv) throws Exception {
+        BoardVO boardVO = boardService.getDetail(pager);
         mv.addObject("vo", boardVO);
         mv.setViewName("board/boardUpdate");
         return mv;
     }
 
+    /**
+     * 글 업데이트 (DB UPDATE)
+     * @param boardVO
+     */
     @PostMapping("boardUpdate")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> setUpdate(BoardVO boardVO) throws Exception {
@@ -82,6 +106,10 @@ public class BoardController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /**
+     * 글 삭제
+     * @param boardVO
+     */
     @PostMapping("boardDelete")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> setDelete(BoardVO boardVO) throws Exception {
@@ -92,6 +120,10 @@ public class BoardController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /**
+     * 파일 업로드
+     * @param mf
+     */
     @PostMapping("uploadFile")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> uploadFile(MultipartFile mf) throws Exception {
@@ -103,6 +135,10 @@ public class BoardController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /**
+     * 파일 삭제
+     * @param fileName
+     */
     @PostMapping("deleteFile")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> deleteFile(String fileName) throws Exception {

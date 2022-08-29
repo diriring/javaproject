@@ -1,5 +1,4 @@
 $("#deleteBtn").on("click", function() {
-    console.log($("#password").val());
     $.ajax({
         type: "POST",
         url: "./memberDelete",
@@ -7,7 +6,6 @@ $("#deleteBtn").on("click", function() {
             password: $("#password").val()
         },
         success: function(result) {
-            console.log(result);
             if(1 == result.data) {
                 alert("탈퇴되었습니다.");
                 location.href="../";

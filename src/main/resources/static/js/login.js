@@ -10,7 +10,6 @@ $("#loginBtn").on("click", function () {
            if(1 == result.data) {
                alert("로그인 성공");
                location.href="../";
-
            }else {
                alert("로그인 실패");
                location.href="./login";

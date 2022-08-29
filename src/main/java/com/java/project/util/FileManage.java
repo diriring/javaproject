@@ -24,7 +24,6 @@ public class FileManage {
 
     public String fileSave(MultipartFile mf, String path) throws Exception {
         path = servletContext.getRealPath(path);
-        System.out.println(path);
 
         File file = new File(path);
 

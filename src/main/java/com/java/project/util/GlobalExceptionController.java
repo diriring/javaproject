@@ -5,10 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,12 +22,12 @@ public class GlobalExceptionController {
         return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(ArrayIndexOutOfBoundsException.class)
+    @ExceptionHandler(IndexOutOfBoundsException.class)
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> arrayIndexOutOfBoundsExceptionHandle() {
-        System.out.println("ArrayIndexOutOfBoundsException 발생");
+    public ResponseEntity<Map<String, Object>> indexOutOfBoundsExceptionHandle() {
+        System.out.println("IndexOutOfBoundsException 발생");
         Map<String, Object> result = new HashMap<>();
-        result.put("desc", "ArrayIndexOutOfBoundsException");
+        result.put("desc", "IndexOutOfBoundsException");
         result.put("status", 500);
         return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
     }

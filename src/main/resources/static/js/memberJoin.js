@@ -48,7 +48,6 @@ $("#joinBtn").on("click", function() {
             phone: $("#phone").val()
         },
         success: function(result) {
-            console.log(result);
             if(1 == result.data) {
                 alert("회원가입 성공");
                 location.href="../";
@@ -91,7 +90,6 @@ $("#email").on("change", function() {
 
 //아이디 중복체크
 $("#idCheckBtn").on("click", function() {
-    console.log($("#id").val());
     $.ajax({
         type: "POST",
         url: "./checkMember",

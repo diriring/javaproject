@@ -18,6 +18,10 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
+    /**
+     * 댓글 등록
+     * @param replyVO
+     */
     @PostMapping("setAdd")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> setAdd(ReplyVO replyVO) throws Exception {
@@ -27,6 +31,11 @@ public class ReplyController {
         result.put("status", 200);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    /**
+     * 댓글 업데이트
+     * @param replyVO
+     */
     @PostMapping("setUpdate")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> setUpdate(ReplyVO replyVO) throws Exception {
@@ -37,6 +46,10 @@ public class ReplyController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    /**
+     * 댓글 삭제
+     * @param replyVO
+     */
     @PostMapping("setDelete")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> setDelete(ReplyVO replyVO) throws Exception {
