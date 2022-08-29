@@ -15,6 +15,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         boolean check = false;
         MemberVO memberVO = (MemberVO)request.getSession().getAttribute("member");
+
         if(memberVO != null) {
             check = true;
         }
@@ -25,6 +26,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/common/result.jsp");
             view.forward(request, response);
         }
+
         return check;
     }
 }

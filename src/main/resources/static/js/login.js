@@ -7,9 +7,7 @@ $("#loginBtn").on("click", function () {
            password: $("#password").val(),
        },
        success: function(result) {
-           // console.log(result);
-
-           if(result == 1) {
+           if(1 == result.data) {
                alert("로그인 성공");
                location.href="../";
 
@@ -18,8 +16,9 @@ $("#loginBtn").on("click", function () {
                location.href="./login";
            }
        },
-       error: function() {
-           alert("로그인 에러");
+       error: function(result) {
+           json = result.responseJSON;
+           alert("로그인 에러 " + json.status + " : " + json.desc);
        }
    });
 });

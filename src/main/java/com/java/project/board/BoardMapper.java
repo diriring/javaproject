@@ -8,11 +8,12 @@ import java.util.List;
 @Mapper
 public interface BoardMapper {
 
-    public int setAdd(BoardVO boardVO) throws Exception;
-    public List<BoardVO> getList(Pager pager) throws Exception;
-    public Long countTotal(Pager pager) throws Exception;
-    public BoardVO getDetail(BoardVO boardVO) throws Exception;
-    public int setUpdate(BoardVO boardVO) throws Exception;
-    public int setDelete(BoardVO boardVO) throws Exception;
+    int setAdd(BoardVO boardVO) throws Exception;
+    List<BoardVO> getList(Pager pager) throws Exception;
+    Long countTotal(Pager pager) throws Exception;
+    BoardVO getDetail(BoardVO boardVO) throws Exception;
+    int setUpdate(BoardVO boardVO) throws Exception;
+    int setDelete(BoardVO boardVO) throws Exception;
+    int countHit(BoardVO boardVO) throws Exception;
 
 }

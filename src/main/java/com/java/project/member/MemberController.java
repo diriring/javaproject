@@ -1,9 +1,9 @@
 package com.java.project.member;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/member/*")
@@ -23,15 +25,17 @@ public class MemberController {
     public ModelAndView setAdd() throws Exception {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("member/memberJoin");
-
         return mv;
     }
 
     @PostMapping("memberJoin")
     @ResponseBody
-    public int setAdd(MemberVO memberVO) throws Exception {
-        int result = memberService.setAdd(memberVO);
-        return result;
+    public ResponseEntity<Map<String, Object>> setAdd(MemberVO memberVO) throws Exception {
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", memberService.setAdd(memberVO));
+        result.put("desc", "success");
+        result.put("status", 200);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("login")
@@ -43,13 +47,15 @@ public class MemberController {
 
     @PostMapping("login")
     @ResponseBody
-    public int login(MemberVO memberVO, HttpSession session) throws Exception {
-        int result = memberService.login(memberVO, session);
-        return result;
+    public ResponseEntity<Map<String, Object>> login(MemberVO memberVO, HttpSession session) throws Exception {
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", memberService.login(memberVO, session));
+        result.put("desc", "success");
+        result.put("status", 200);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("logout")
-    @ResponseBody
     public String logout(HttpSession session) throws Exception {
         memberService.logout(session);
         return "index";
@@ -75,11 +81,12 @@ public class MemberController {
 
     @PostMapping("memberUpdate")
     @ResponseBody
-    public int setUpdate(MemberVO memberVO, HttpSession session) throws Exception {
-
-
-        int result = memberService.setUpdate(memberVO, session);
-        return result;
+    public ResponseEntity<Map<String, Object>> setUpdate(MemberVO memberVO, HttpSession session) throws Exception {
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", memberService.setUpdate(memberVO, session));
+        result.put("desc", "success");
+        result.put("status", 200);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("memberDelete")
@@ -89,16 +96,22 @@ public class MemberController {
 
     @PostMapping("memberDelete")
     @ResponseBody
-    public int setDelete(MemberVO memberVO, HttpSession session) throws Exception {
-        int result = memberService.setDelete(memberVO, session);
-        return result;
+    public ResponseEntity<Map<String, Object>> setDelete(MemberVO memberVO, HttpSession session) throws Exception {
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", memberService.setDelete(memberVO, session));
+        result.put("desc", "success");
+        result.put("status", 200);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping("checkMember")
     @ResponseBody
-    public int checkMember(MemberVO memberVO) throws Exception {
-        int result = memberService.checkMember(memberVO);
-        return result;
+    public ResponseEntity<Map<String, Object>> checkMember(MemberVO memberVO) throws Exception {
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", memberService.checkMember(memberVO));
+        result.put("desc", "success");
+        result.put("status", 200);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 }

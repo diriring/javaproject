@@ -16,9 +16,6 @@ window.onpopstate = function(event) { history.go(1); };
 
 //글 등록
 $("#addBtn").on("click", function() {
-    //console.log("클릭");
-    // console.log($("#categoryNum").val());
-
     $.ajax({
         type: "POST",
         url: "/board/boardWrite",
@@ -29,10 +26,7 @@ $("#addBtn").on("click", function() {
             categoryNum: $("#categoryNum").val()
         },
         success: function(result) {
-
-            console.log(result);
-
-            if (result.data == 1) {
+            if (1 == result.data) {
                 alert("등록 성공");
                 localStorage.clear();
                 location.href="/board/boardList";
@@ -42,8 +36,9 @@ $("#addBtn").on("click", function() {
                 location.href="/board/boardList";
             }
         },
-        error: function() {
-            alert("에러");
+        error: function(result) {
+            json = result.responseJSON;
+            alert("글 등록 에러 " + json.status + " : " + json.desc);
         }
     });
 
@@ -58,7 +53,6 @@ $("a").on("click", function(event) {
 //파일 삭제
 function deleteFile(fileName) {
     $.ajax({
-
         type: "POST",
         url: "./deleteFile",
         data: {
@@ -66,6 +60,10 @@ function deleteFile(fileName) {
         },
         success: function(result) {
             console.log(result.data);
+        },
+        error: function (result) {
+            json = result.responseJSON;
+            alert("파일 삭제 에러 " + json.status + " : " + json.desc);
         }
 
     });
@@ -86,18 +84,12 @@ function deleteTemp(path) {
         return false;
     }
 
-    // console.log($("img").attr("src"));
-
     let src = new Array();
 
     $("img").each(function(index, item) {
         let split = item.src.split('/');
-        console.log(split);
-        let path = "../" + split[3] + "/" + split[4] + "/" + split[5];
         src[index] = split[5];
     });
-
-    console.log(src);
 
     src.forEach((path)=>deleteFile(path));
 

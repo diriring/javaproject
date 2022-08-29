@@ -4,8 +4,6 @@ $("#deleteBtn").on("click", function() {
 
     $("#content img").each(function(index, item) {
         let split = item.src.split('/');
-        // console.log(split);
-        // let path = "../" + split[3] + "/" + split[4] + "/" + split[5];
         src[index] = split[5];
     });
 
@@ -18,21 +16,18 @@ $("#deleteBtn").on("click", function() {
             boardNum: $("#boardNum").val()
         },
         success: function(result) {
-
-            console.log(result);
-
-            if (result.data == 1) {
+            if (1 == result.data) {
                 src.forEach((path)=>deleteFile(path));
                 alert("삭제 성공");
                 location.href="/board/boardList";
-
             } else {
                 alert("삭제 실패");
                 location.href="/board/boardList";
             }
         },
-        error: function() {
-            alert("에러");
+        error: function(result) {
+            json = result.responseJSON;
+            alert("글 삭제 에러 " + json.status + " : " + json.desc);
         }
     });
 });
@@ -47,10 +42,7 @@ $("#replyAddBtn").on("click", function() {
             content: $("#replyContent").val()
         },
         success: function(result) {
-
-            console.log(result);
-
-            if (result.data == 1) {
+            if (1 == result.data) {
                 alert("댓글 등록 성공");
                 //댓글 목록 갱신
                 location.reload();
@@ -58,14 +50,14 @@ $("#replyAddBtn").on("click", function() {
                 alert("댓글 등록 실패");
             }
         },
-        error: function() {
-            alert("에러");
+        error: function(result) {
+            json = result.responseJSON;
+            alert("댓글 등록 에러 " + json.status + " : " + json.desc);
         }
     });
 });
 
 $("#replyResult").on("click", ".replyUpdateBtn", function(event) {
-    // console.log($(event.target).attr("data-num"));
     $("#updateModal").modal("show");
     let replyNum = $(event.target).attr("data-num");
     $("#replyNum").val(replyNum);
@@ -73,7 +65,6 @@ $("#replyResult").on("click", ".replyUpdateBtn", function(event) {
 });
 
 $("#modalUpdateBtn").on("click", function() {
-
     $.ajax({
         type: "POST",
         url: "/reply/setUpdate",
@@ -83,25 +74,23 @@ $("#modalUpdateBtn").on("click", function() {
         },
         success: function(result) {
             console.log(result);
-            if(result.data == 1) {
+            if(1 == result.data) {
                 alert("댓글 수정 성공");
                 location.reload();
-
             }else {
                 alert("댓글 수정 실패");
                 location.reload();
             }
         },
-        error: function() {
-            alert("댓글 수정 에러");
+        error: function(result) {
+            json = result.responseJSON;
+            alert("댓글 수정 에러 " + json.status + " : " + json.desc);
         }
-
     });
 
 });
 
 $("#replyResult").on("click", ".replyDelBtn", function(event) {
-
     $.ajax({
         type: "POST",
         url: "/reply/setDelete",
@@ -109,17 +98,17 @@ $("#replyResult").on("click", ".replyDelBtn", function(event) {
             replyNum: $(event.target).attr("data-num")
         },
         success: function(result) {
-            if(result.data == 1) {
+            if(1 == result.data) {
                 alert("댓글 삭제 성공");
                 location.reload();
-
             }else {
                 alert("댓글 삭제 실패");
                 location.reload();
             }
         },
-        error: function() {
-            alert("댓글 삭제 에러");
+        error: function(result) {
+            json = result.responseJSON;
+            alert("댓글 삭제 에러 " + json.status + " : " + json.desc);
         }
 
     });
@@ -128,7 +117,6 @@ $("#replyResult").on("click", ".replyDelBtn", function(event) {
 
 function deleteFile(fileName) {
     $.ajax({
-
         type: "POST",
         url: "./deleteFile",
         data: {
@@ -136,6 +124,10 @@ function deleteFile(fileName) {
         },
         success: function(result) {
             console.log(result.data);
+        },
+        error: function (result) {
+            json = result.responseJSON;
+            alert("파일 삭제 에러 " + json.status + " : " + json.desc);
         }
 
     });

@@ -16,8 +16,6 @@ public class FileManage {
     private final ServletContext servletContext;
 
     public boolean remove(String path, String fileName) throws Exception {
-        //파일을 HDD에서 삭제
-        //저장된 파일명, 저장된 경로
         path = servletContext.getRealPath(path);
         File file = new File(path, fileName);
 
@@ -25,14 +23,13 @@ public class FileManage {
     }
 
     public String fileSave(MultipartFile mf, String path) throws Exception {
-
         path = servletContext.getRealPath(path);
         System.out.println(path);
 
         File file = new File(path);
 
         if(!file.exists()) {
-            file.mkdirs(); //중간 폴더가 없으면 중간 폴더도 생성
+            file.mkdirs();
         }
 
         Calendar calendar = Calendar.getInstance();

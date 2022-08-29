@@ -26,6 +26,7 @@ public class BoardService {
     }
 
     public BoardVO getDetail(BoardVO boardVO) throws Exception {
+        boardMapper.countHit(boardVO);
         return boardMapper.getDetail(boardVO);
     }
 
@@ -45,7 +46,6 @@ public class BoardService {
 
     public boolean deleteFile(String fileName) throws Exception {
         fileName = fileName.substring(fileName.lastIndexOf("/")+1);
-        System.out.println(fileName);
         return fileManage.remove("resources/img/", fileName);
     }
 

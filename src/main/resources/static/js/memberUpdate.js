@@ -10,16 +10,16 @@ $("#emailCheckBtn").on("click", function() {
         },
         success: function(result) {
             console.log(result);
-            if(result == 1) {
+            if(1 == result.data) {
                 alert("이미 사용중인 이메일입니다.");
-
             }else {
                 alert("사용하실 수 있는 이메일입니다.");
                 uniqueEmail = true;
             }
         },
-        error: function() {
-            alert("이메일 체크 에러");
+        error: function(result) {
+            json = result.responseJSON;
+            alert("이메일 체크 에러 " + json.status + " : " + json.desc);
         }
     });
 });
@@ -42,8 +42,7 @@ $("#updateBtn").on("click", function() {
             phone: $("#phone").val(),
         },
         success: function(result) {
-            console.log(result);
-            if(result == 1) {
+            if(1 == result.data) {
                 alert("수정 성공");
                 location.href="./myPage";
 
@@ -52,8 +51,9 @@ $("#updateBtn").on("click", function() {
                 location.href="./myPage";
             }
         },
-        error: function() {
-            alert("수정 에러");
+        error: function(result) {
+            json = result.responseJSON;
+            alert("글 수정 에러 " + json.status + " : " + json.desc);
         }
     });
 });

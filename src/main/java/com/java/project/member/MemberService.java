@@ -1,19 +1,15 @@
 package com.java.project.member;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
 import javax.xml.bind.DatatypeConverter;
 import java.lang.reflect.Member;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Base64;
-import java.util.Enumeration;
 
 @Service
 @RequiredArgsConstructor
@@ -50,7 +46,9 @@ public class MemberService {
         String id = memberVO.getId();
 
         //솔트값 가져오기
-        memberVO = memberMapper.getMyInfo(memberVO);
+        MemberVO temp = new MemberVO();
+        temp.setId(id);
+        memberVO = memberMapper.getMyInfo(temp);
         String salt = memberVO.getSalt();
 
         password = password + salt;
@@ -68,7 +66,6 @@ public class MemberService {
         memberVO = memberMapper.getMember(memberVO);
 
         int result = 0;
-
 
         if (memberVO != null) {
             //로그인 성공
@@ -104,7 +101,6 @@ public class MemberService {
         password = DatatypeConverter.printBase64Binary(md.digest());
 
         temp.setPassword(password);
-
         temp = memberMapper.getMember(temp);
 
         int result = 3;

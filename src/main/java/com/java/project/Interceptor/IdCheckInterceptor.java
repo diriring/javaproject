@@ -40,6 +40,7 @@ public class IdCheckInterceptor implements HandlerInterceptor {
             RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/common/result.jsp");
             view.forward(request, response);
         }
+
         return check;
     }
 }

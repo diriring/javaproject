@@ -49,17 +49,17 @@ $("#joinBtn").on("click", function() {
         },
         success: function(result) {
             console.log(result);
-            if(result == 1) {
+            if(1 == result.data) {
                 alert("회원가입 성공");
                 location.href="../";
-
             }else {
                 alert("회원가입 실패");
                 location.href="./";
             }
         },
-        error: function() {
-            alert("회원가입 에러");
+        error: function(result) {
+            json = result.responseJSON;
+            alert("회원가입 에러 " + json.status + " : " + json.desc);
         }
     });
 });
@@ -99,24 +99,22 @@ $("#idCheckBtn").on("click", function() {
             id: $("#id").val(),
         },
         success: function(result) {
-            console.log(result);
-            if(result == 1) {
+            if(1 == result.data) {
                 alert("이미 사용중인 아이디입니다.");
-
             }else {
                 alert("사용하실 수 있는 아이디입니다.");
                 uniqueId = true;
             }
         },
-        error: function() {
-            alert("아이디 체크 에러");
+        error: function(result) {
+            json = result.responseJSON;
+            alert("아이디 체크 에러 " + json.status + " : " + json.desc);
         }
     });
 });
 
 //이메일 중복체크
 $("#emailCheckBtn").on("click", function() {
-    console.log($("#email").val());
     $.ajax({
         type: "POST",
         url: "./checkMember",
@@ -124,17 +122,16 @@ $("#emailCheckBtn").on("click", function() {
             email: $("#email").val()
         },
         success: function(result) {
-            console.log(result);
-            if(result == 1) {
+            if(1 == result.data) {
                 alert("이미 사용중인 이메일입니다.");
-
             }else {
                 alert("사용하실 수 있는 이메일입니다.");
                 uniqueEmail = true;
             }
         },
-        error: function() {
-            alert("아이디 체크 에러");
+        error: function(result) {
+            json = result.responseJSON;
+            alert("이메일 체크 에러 " + json.status + " : " + json.desc);
         }
     });
 });
@@ -201,7 +198,6 @@ function chkEmail(){
     if(exptext.test(email)==false){
 
         //이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우
-
         return false;
     }
 

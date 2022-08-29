@@ -23,6 +23,8 @@ public class ReplyController {
     public ResponseEntity<Map<String, Object>> setAdd(ReplyVO replyVO) throws Exception {
         Map<String, Object> result = new HashMap<>();
         result.put("data", replyService.setAdd(replyVO));
+        result.put("desc", "success");
+        result.put("status", 200);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
     @PostMapping("setUpdate")
@@ -30,6 +32,8 @@ public class ReplyController {
     public ResponseEntity<Map<String, Object>> setUpdate(ReplyVO replyVO) throws Exception {
         Map<String, Object> result = new HashMap<>();
         result.put("data", replyService.setUpdate(replyVO));
+        result.put("desc", "success");
+        result.put("status", 200);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -38,6 +42,8 @@ public class ReplyController {
     public ResponseEntity<Map<String, Object>> setDelete(ReplyVO replyVO) throws Exception {
         Map<String, Object> result = new HashMap<>();
         result.put("data", replyService.setDelete(replyVO));
+        result.put("desc", "success");
+        result.put("status", 200);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

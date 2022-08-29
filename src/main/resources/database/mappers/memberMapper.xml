@@ -14,7 +14,11 @@
 
     <select id="getMember" parameterType="MemberVO" resultType="MemberVO">
         SELECT
-            sId as id
+            sId as id,
+            sSalt as salt,
+            sName as name,
+            sEmail as email,
+            sPhone as phone
         FROM
             tMember
         WHERE

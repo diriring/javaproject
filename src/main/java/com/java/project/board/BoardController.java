@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +25,11 @@ public class BoardController {
 
     private final BoardService boardService;
     private final ReplyService replyService;
+
+    @GetMapping("exception")
+    public void generateException() {
+
+    }
 
     @GetMapping("boardList")
     public ModelAndView getList(Pager pager) throws Exception {
@@ -46,6 +50,8 @@ public class BoardController {
     public ResponseEntity<Map<String, Object>> setAdd(BoardVO boardVO) throws Exception {
         Map<String, Object> result = new HashMap<>();
         result.put("data", boardService.setAdd(boardVO));
+        result.put("desc", "success");
+        result.put("status", 200);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -81,6 +87,8 @@ public class BoardController {
     public ResponseEntity<Map<String, Object>> setDelete(BoardVO boardVO) throws Exception {
         Map<String, Object> result = new HashMap<>();
         result.put("data", boardService.setDelete(boardVO));
+        result.put("desc", "success");
+        result.put("status", 200);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -88,9 +96,10 @@ public class BoardController {
     @ResponseBody
     public ResponseEntity<Map<String, Object>> uploadFile(MultipartFile mf) throws Exception {
         String fileName = boardService.uploadFile(mf);
-//        System.out.println(mf.getOriginalFilename());
         Map<String, Object> result = new HashMap<>();
         result.put("data", fileName);
+        result.put("desc", "success");
+        result.put("status", 200);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
@@ -98,9 +107,10 @@ public class BoardController {
     @ResponseBody
     public ResponseEntity<Map<String, Object>> deleteFile(String fileName) throws Exception {
         boolean check = boardService.deleteFile(fileName);
-//        System.out.println(mf.getOriginalFilename());
         Map<String, Object> result = new HashMap<>();
         result.put("data", check);
+        result.put("desc", "success");
+        result.put("status", 200);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

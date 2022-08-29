@@ -33,8 +33,7 @@
     </update>
 
     <delete id="setDelete" parameterType="ReplyVO">
-        DELETE
-        FROM
+        DELETE FROM
             tReply
         WHERE
             seqReplyNum = #{replyNum}

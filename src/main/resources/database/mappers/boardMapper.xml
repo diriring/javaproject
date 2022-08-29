@@ -20,18 +20,18 @@
             bd.dtEditDate as editDate
         FROM
             tBoard bd
-        INNER JOIN
-            tCategory ct ON (bd.nCategoryNum = ct.nCategoryNum)
-        WHERE
+            INNER JOIN tCategory ct ON (bd.nCategoryNum = ct.nCategoryNum)
+        <where>
             <choose>
-                <when test="kind == 'title'">sTitle</when>
-                <when test="kind == 'content'">sContent</when>
-                <otherwise>sId</otherwise>
+                <when test="kind == 'title'">sTitle LIKE CONCAT('%',#{search},'%')</when>
+                <when test="kind == 'content'">sContent LIKE CONCAT('%',#{search},'%')</when>
+                <when test="kind == 'id'">sId LIKE CONCAT('%',#{search},'%')</when>
             </choose>
-            LIKE CONCAT('%',#{search},'%')
+        </where>
         ORDER BY
             seqBoardNum DESC
-            LIMIT #{startRow}, #{perPage}
+        LIMIT
+            #{startRow}, #{perPage}
     </select>
     
     <resultMap id="listResult" type="BoardVO">
@@ -54,13 +54,13 @@
             COUNT(seqBoardNum)
         FROM
             tBoard
-        WHERE
-        <choose>
-            <when test="kind == 'title'">sTitle</when>
-            <when test="kind == 'content'">sContent</when>
-            <otherwise>sId</otherwise>
-        </choose>
-        LIKE CONCAT('%',#{search},'%')
+        <where>
+            <choose>
+                <when test="kind == 'title'">sTitle LIKE CONCAT('%',#{search},'%')</when>
+                <when test="kind == 'content'">sContent LIKE CONCAT('%',#{search},'%')</when>
+                <when test="kind == 'id'">sId LIKE CONCAT('%',#{search},'%')</when>
+            </choose>
+        </where>
     </select>
 
     <select id="getDetail" parameterType="BoardVO" resultMap="listResult">
@@ -76,8 +76,7 @@
             bd.dtEditDate as editDate
         FROM
             tBoard bd
-        INNER JOIN
-            tCategory ct ON (bd.nCategoryNum = ct.nCategoryNum)
+            INNER JOIN tCategory ct ON (bd.nCategoryNum = ct.nCategoryNum)
         WHERE
             seqBoardNum = #{boardNum}
     </select>
@@ -95,10 +94,19 @@
     </update>
 
     <delete id="setDelete" parameterType="BoardVO">
-        DELETE
-        FROM
+        DELETE FROM
             tBoard
         WHERE
             seqBoardNum = #{boardNum}
     </delete>
+
+    <update id="countHit" parameterType="BoardVO">
+        UPDATE
+            tBoard
+        SET
+            nhit = nhit + 1
+        WHERE
+            seqBoardNum = #{boardNum}
+    </update>
+
 </mapper>
