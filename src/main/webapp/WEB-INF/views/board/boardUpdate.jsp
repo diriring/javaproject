@@ -77,6 +77,7 @@
 
         if (result.data == 1) {
           alert("수정 성공");
+          localStorage.clear();
           location.href="/board/boardList";
 
         } else {
